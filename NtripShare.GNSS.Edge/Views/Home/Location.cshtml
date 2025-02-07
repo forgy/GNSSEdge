@@ -1,0 +1,234 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<HomeController> StringLocalizer
+@{
+	ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+	<div class="layui-fluid" id="data">
+		<div class="layui-row layui-col-space15" style="margin-bottom:60px">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">@StringLocalizer["Location"]</div>
+					<div class="layui-card-body">
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+							<legend>@StringLocalizer["Coordinate"]</legend>
+						</fieldset>
+						<table class="layui-table" lay-size="sm">
+							<tbody>
+								<tr>
+									<td>@StringLocalizer["Latitude"]</td>
+									<td>@ViewData["Lat"]</td>
+									<td>@StringLocalizer["Longitude"]</td>
+									<td>@ViewData["Lon"]</td>
+								</tr>
+								<tr>
+									<td>@StringLocalizer["Height"]</td>
+									<td>@ViewData["Altitude"]</td>
+									<td>@StringLocalizer["Ellipsoid"]</td>
+									<td>WGS84</td>
+								</tr>
+								<tr>
+									<td>@StringLocalizer["Status"]</td>
+									<td>@ViewData["FixQuality"]</td>
+									<td>@StringLocalizer["AgeOfDiff"]</td>
+									<td>@ViewData["DGPSUpdate"]</td>
+
+								</tr>
+								<tr>
+									<td>@StringLocalizer["SatellitesTracked"]</td>
+									<td>@ViewData["SatellitesTracked"]</td>
+									<td>@StringLocalizer["SatellitesInView"]</td>
+									<td>@ViewData["SatellitesInView"]</td>
+								</tr>
+							</tbody>
+						</table>
+@* 
+						@* <div class="layui-card">
+						<div class="layui-card-header">@StringLocalizer["Velocity"]</div>
+						<div class="layui-card-body">
+						<table class="layui-table" lay-size="sm">
+						<tbody>
+						<tr>
+						<td>@StringLocalizer["East"]</td>
+						<td></td>
+						<td>@StringLocalizer["North"]</td>
+						<td></td>
+						</tr>
+						<tr>
+						<td>@StringLocalizer["Up"]</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						</tr>
+						</tbody>
+						</table>
+						</div>
+						</div> 
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+							<legend>@StringLocalizer["Error Estimates(1σ)"]</legend>
+						</fieldset>
+
+						<table class="layui-table" lay-size="sm">
+							<tbody>
+								<tr>
+									<td>@StringLocalizer["East"]</td>
+									<td>@ViewData["SigmaLongitudeError"]</td>
+									<td>@StringLocalizer["North"]</td>
+									<td>@ViewData["SigmaLatitudeError"]</td>
+								</tr>
+								<tr>
+									<td>@StringLocalizer["Up"]</td>
+									<td>@ViewData["SigmaHeightError"]</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>@StringLocalizer["Semi Major Axis"]</td>
+									<td>@ViewData["SemiMajorError"]</td>
+									<td>@StringLocalizer["Semi Minor Axis"]</td>
+									<td>@ViewData["SemiMinorError"]</td>
+								</tr>
+								<tr>
+									<td>@StringLocalizer["Orientation"]</td>
+									<td>@ViewData["ErrorOrientation"]</td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table> *@
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+							<legend>DOP</legend>
+						</fieldset>
+						<table class="layui-table" lay-size="sm">
+							<tbody>
+								<tr>
+									<td>PDOP</td>
+									<td>@ViewData["PDOP"]</td>
+									<td>HDOP</td>
+									<td>@ViewData["HDOP"]</td>
+								</tr>
+								<tr>
+									<td>VDOP</td>
+									<td>@ViewData["HDOP"]</td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+							<legend>@StringLocalizer["SatellitesTracked"]</legend>
+						</fieldset>
+
+						<table class="layui-table" lay-size="sm">
+							<thead>
+								<tr>
+									<th>Satellite</th>
+									<th>PRN</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>GPS</td>
+									<td>@ViewData["GPSTracked"]</td>
+								</tr>
+								<tr>
+									<td>Glonass</td>
+									<td>@ViewData["GlonassTracked"]</td>
+								</tr>
+								<tr>
+									<td>Galileo</td>
+									<td>@ViewData["GalileoTracked"]</td>
+								</tr>
+								<tr>
+									<td>BDS</td>
+									<td>@ViewData["BDSTracked"]</td>
+								</tr>
+								<tr>
+									<td>QZSS</td>
+									<td>@ViewData["QZSSTracked"]</td>
+								</tr>
+							</tbody>
+						</table>
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+							<legend>@StringLocalizer["SatellitesInView"]</legend>
+						</fieldset>
+
+						<table class="layui-table" lay-size="sm">
+							<thead>
+								<tr>
+									<th>Satellite</th>
+									<th>PRN</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>GPS</td>
+									<td>@ViewData["GPSInView"]</td>
+								</tr>
+								<tr>
+									<td>Glonass</td>
+									<td>@ViewData["GlonassInView"]</td>
+								</tr>
+								<tr>
+									<td>Galileo</td>
+									<td>@ViewData["GalileoInView"]</td>
+								</tr>
+								<tr>
+									<td>BDS</td>
+									<td>@ViewData["BDSInView"]</td>
+								</tr>
+								<tr>
+									<td>QZSS</td>
+									<td>@ViewData["QZSSInView"]</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div id="tmp" hidden></div>
+	<script src="~/lib/layuiadmin/layui/layui.js"></script>
+	<script>
+		layui.config({
+			base: '/lib/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index'], function () {
+			var $ = layui.$
+				, setter = layui.setter
+				, admin = layui.admin
+				, form = layui.form
+				, router = layui.router()
+				, search = router.search;
+
+			setInterval(function () {
+				$.get(location.pathname + "?culture=@CultureInfo.CurrentCulture.Name", function (data) {
+					// 该例子无需执行返回的js，如果需要执行可使用jquery的html()，而不是innerHTML
+					$("#tmp")[0].innerHTML = data    // 不加载执行js, 查找资料说可以使用jquery的parseHTML的，但是我这里报未定义函数，暂不深究了
+					$("#data").html($("#tmp").find("#data").html()) // ajax返回的html页面内容临时放入tmp中，方便获取指定dom节点。替换掉原来界面的数据
+					$("#tmp")[0].innerHTML = ""
+				})
+			}, 1000);
+		});
+	</script>
+</body>
+</html>
+
+

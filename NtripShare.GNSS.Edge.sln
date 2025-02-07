@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NtripShare.GNSS.Edge", "NtripShare.GNSS.Edge\NtripShare.GNSS.Edge.csproj", "{F728C4E6-4750-4BCB-950A-6231FF1B8431}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NtripShare.GNSS.Device", "NtripShare.GNSS.Device\NtripShare.GNSS.Device.csproj", "{37D5A0F0-9CAF-4B95-B819-FC565869CBA1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F728C4E6-4750-4BCB-950A-6231FF1B8431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F728C4E6-4750-4BCB-950A-6231FF1B8431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F728C4E6-4750-4BCB-950A-6231FF1B8431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F728C4E6-4750-4BCB-950A-6231FF1B8431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D5A0F0-9CAF-4B95-B819-FC565869CBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D5A0F0-9CAF-4B95-B819-FC565869CBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D5A0F0-9CAF-4B95-B819-FC565869CBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D5A0F0-9CAF-4B95-B819-FC565869CBA1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F8D96EB-C099-4DC1-9322-8407BC92EF06}
+	EndGlobalSection
+EndGlobal

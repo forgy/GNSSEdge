@@ -1,0 +1,239 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<HomeController> StringLocalizer
+@{
+	ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body class="layui-layout-body">
+
+    <div id="LAY_app">
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <!-- 头部区域 -->
+                <ul class="layui-nav layui-layout-left">
+                    <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                        <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;" layadmin-event="refresh" title="刷新">
+                            <i class="layui-icon layui-icon-refresh-3"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="theme">
+                            <i class="layui-icon layui-icon-theme"></i>
+                        </a>
+                    </li>
+                    @* <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="note">
+                            <i class="layui-icon layui-icon-note"></i>
+                        </a>
+                    </li> *@
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="fullscreen">
+                            <i class="layui-icon layui-icon-screen-full"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;">
+                            <cite>@ViewData["User"]</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-href="/SysConfig/Pass">修改密码</a></dd>
+                            <hr>
+                            <dd><a lay-href="/Login/Logout">退出</a></dd>
+                        </dl>
+                    </li>
+
+                @*     <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li>
+                    <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                        <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li> *@
+                </ul>
+            </div>
+
+            <!-- 侧边菜单 -->
+            <div class="layui-side layui-side-menu">
+                <div class="layui-side-scroll">
+                    <div class="layui-logo" lay-href="#">
+                        <span>NtripShare</span>
+                    </div>
+
+                    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+                        <li data-name="device" class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;" lay-tips="状态信息" lay-direction="2">
+                                <i class="layui-icon layui-icon-component"></i>
+                                <cite>状态信息</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="console" class="layui-this">
+                                    <a lay-href="/Home/Version">版本信息</a>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/Home/Satellite">卫星列表</a>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/Home/SkyView">星空图</a>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/Home/Location">定位状态</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="device" class="layui-nav-item ">
+                            <a href="javascript:;" lay-tips="接收机配置" lay-direction="2">
+                                <i class="layui-icon layui-icon-set"></i>
+                                <cite>接收机配置</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="config">
+                                    <a lay-href="/Config/SatelliteTrack">卫星跟踪</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/Config/WorkMode">工作模式</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/Config/Antenna">天线设置</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/Config/OutSetting">报文设置</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="device" class="layui-nav-item ">
+                            <a href="javascript:;" lay-tips="数据传输" lay-direction="2">
+                                <i class="layui-icon layui-icon-senior"></i>
+                                <cite>数据传输</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="data">
+                                    <a lay-href="/IO">传输状态</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/Com">串口</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/Tcp">TCP</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/NtripCaster">NtripCaster</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/NtripServer">NtripServer</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/NtripClient">NtripClient</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/Mqtt">MQTT</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="device" class="layui-nav-item ">
+                            <a href="javascript:;" lay-tips="系统设置" lay-direction="2">
+                                <i class="layui-icon layui-icon-set"></i>
+                                <cite>系统设置</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="config">
+                                    <a lay-href="/SysConfig/Upnp">Upnp设置</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/SysConfig/Pass">修改密码</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/SysConfig/SoftVersion">软件版本</a>
+                                </dd>
+                                 <dd data-name="/SysConfig/Restart">
+                                    <a lay-href="#">重启系统</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="device" class="layui-nav-item ">
+                            <a href="javascript:;" lay-tips="关于" lay-direction="2">
+                                <i class="layui-icon layui-icon-auz"></i>
+                                <cite>关于</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                               @*  <dd data-name="console">
+                                    <a lay-href="/Update">固件</a>
+                                </dd> *@
+                                <dd data-name="console">
+                                    <a lay-href="/About">关于</a>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 页面标签 -->
+            <div class="layadmin-pagetabs" id="LAY_app_tabs">
+                <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                    <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                        <li class="layui-nav-item" lay-unselect>
+                            <a href="javascript:;"></a>
+                            <dl class="layui-nav-child layui-anim-fadein">
+                                <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                                <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                                <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                    <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                        <li lay-id="/Home/Version" lay-attr="/Home/Version" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- 主体内容 -->
+            <div class="layui-body" id="LAY_app_body">
+                <div class="layadmin-tabsbody-item layui-show">
+                    <iframe src="/Home/Version" frameborder="0" class="layadmin-iframe"></iframe>
+                </div>
+            </div>
+            <div class="layui-footer" style="z-index:1000">
+                <!-- 底部固定区域 -->
+                <p>Powered By NtripShare © 2024</p>
+            </div>
+            <!-- 辅助元素，一般用于移动设备下遮罩 -->
+            <div class="layadmin-body-shade" layadmin-event="shade"></div>
+        </div>
+    </div>
+
+    <script src="~/lib/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '/lib/layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form', 'set', "ax"]);
+    </script>
+</body>
+</html>
+
+

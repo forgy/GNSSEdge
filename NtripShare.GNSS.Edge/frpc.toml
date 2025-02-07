@@ -1,0 +1,17 @@
+serverAddr = "t.ntripshare.com"
+serverPort = 70
+auth.token = ""
+
+[[proxies]]
+name = "XXXXXXXXssh2"
+type = "tcpmux"
+multiplexer = "httpconnect"
+customDomains = ["XXXXXXXX.ntripshare.com"]
+localIP = "127.0.0.1"
+localPort = 22
+
+[[proxies]]
+name = "XXXXXXXXweb"
+type = "http"
+localPort = 80
+customDomains = ["XXXXXXXX.ntripshare.com"]

@@ -1,0 +1,660 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<ConfigController> StringLocalizer
+@{
+    ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+    <div class="layui-fluid">
+        <form class="layui-form" action="" lay-filter="component-form-group">
+            <div class="layui-card" style="margin-bottom:60px">
+                <div class="layui-card-header">@StringLocalizer["LogMessage"]</div>
+                <div class="layui-card-body" style="padding: 15px;">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
+                        <legend>RTCM</legend>
+                    </fieldset>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["BaseCoord"]</label>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1005" title="RTCM1005" checked="@Model.RTCM1005" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1006" title="RTCM1006" checked="@Model.RTCM1006" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1033" title="RTCM1033" checked="@Model.RTCM1033" value="true" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["OBS"]</label>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1074" title="RTCM1074" checked="@Model.RTCM1074" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1124" title="RTCM1124" checked="@Model.RTCM1124" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1084" title="RTCM1084" checked="@Model.RTCM1084" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1094" title="RTCM1094" checked="@Model.RTCM1094" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1114" title="RTCM1114" checked="@Model.RTCM1114" value="true" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["NAV"]</label>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1019" title="RTCM1019" checked="@Model.RTCM1019" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1042" title="RTCM1042" checked="@Model.RTCM1042" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1020" title="RTCM1020" checked="@Model.RTCM1020" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1045" title="RTCM1045" checked="@Model.RTCM1045" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="RTCM1046" title="RTCM1042" checked="@Model.RTCM1046" value="true">
+                        </div>
+                    </div>
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                        <legend>NMEA</legend>
+                    </fieldset>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">NMEA</label>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPGGA" title="GPGGA" checked="@Model.GPGGA" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPGSV" title="GPGSV" checked="@Model.GPGSV" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPGSA" title="GPGSA" checked="@Model.GPGSA" value="true" disabled>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPGLL" title="GPGLL" checked="@Model.GPGLL" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPGST" title="GPGST" checked="@Model.GPGST" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPHDT" title="GPHDT" checked="@Model.GPHDT" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPRMC" title="GPRMC" checked="@Model.GPRMC" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPVTG" title="GPVTG" checked="@Model.GPVTG" value="true">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="GPZDA" title="GPZDA" checked="@Model.GPZDA" value="true">
+                        </div>
+                    </div>
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
+                        <legend>@StringLocalizer["OutInterval"]</legend>
+                    </fieldset>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["BaseCoord"]</label>
+                        <div class="layui-input-inline">
+                            <select name="BaseCoordInterval" lay-verify="required" value="@Model.BaseCoordInterval" required>
+                                @if (Model.BaseCoordInterval == 1)
+                                {
+                                    <option value="1" selected>1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.BaseCoordInterval == 5)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5" selected>5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.BaseCoordInterval == 10)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10" selected>10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.BaseCoordInterval == 20)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20" selected>20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.BaseCoordInterval == 30)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30" selected>30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.BaseCoordInterval == 60)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60" selected>60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.BaseCoordInterval == 300)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300" selected>5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.BaseCoordInterval == 600)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600" selected>10分钟</option>
+                                }
+                                else
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["OBS"]</label>
+                        <div class="layui-input-inline">
+                            <select name="OBSInterval" lay-verify="required" value="@Model.OBSInterval" required>
+                                @if (Model.OBSInterval == 1)
+                                {
+                                    <option value="1" selected>1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.OBSInterval == 5)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5" selected>5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.OBSInterval == 10)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10" selected>10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.OBSInterval == 20)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20" selected>20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.OBSInterval == 30)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30" selected>30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.OBSInterval == 60)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60" selected>60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.OBSInterval == 300)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300" selected>5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.OBSInterval == 600)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600" selected>10分钟</option>
+                                }
+                                else
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["NAV"]</label>
+                        <div class="layui-input-inline">
+                            <select name="NavInterval" lay-verify="required" value="@Model.NavInterval" required>
+                                @if (Model.NavInterval == 1)
+                                {
+                                    <option value="1" selected>1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NavInterval == 5)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5" selected>5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NavInterval == 10)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10" selected>10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NavInterval == 20)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20" selected>20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NavInterval == 30)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30" selected>30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NavInterval == 60)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60" selected>60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NavInterval == 300)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300" selected>5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NavInterval == 600)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600" selected>10分钟</option>
+                                }
+                                else
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">NMEA</label>
+                        <div class="layui-input-inline">
+                            <select name="NMEA0183Interval" lay-verify="required" value="@Model.NMEA0183Interval" required>
+                                @if (Model.NMEA0183Interval == 0.05)
+                                {
+                                    <option value="0.05" selected>20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 0.1)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1" selected>10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 0.2)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2" selected>5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 1)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1" selected>1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 5)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5" selected>5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 10)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10" selected>10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 20)
+                                {
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20" selected>20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 30)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30" selected>30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 60)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60" selected>60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 300)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300" selected>5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                                else if (Model.NMEA0183Interval == 600)
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600" selected>10分钟</option>
+                                }
+                                else
+                                {
+                                    <option value="0.05">20HZ</option>
+                                    <option value="0.1">10HZ</option>
+                                    <option value="0.2">5HZ</option>
+                                    <option value="1">1秒</option>
+                                    <option value="5">5秒</option>
+                                    <option value="10">10秒</option>
+                                    <option value="20">20秒</option>
+                                    <option value="30">30秒</option>
+                                    <option value="60">60秒</option>
+                                    <option value="300">5分钟</option>
+                                    <option value="600">10分钟</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-layout-admin">
+                        <div class="layui-input-block">
+                            <div style="left: 0;">
+                                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">@StringLocalizer["Save"]</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="~/lib/layuiadmin/layui/layui.js"></script>
+    <script>
+		layui.config({
+			base: '/lib/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index', 'form', 'set', "ax"], function () {
+			var $ax = layui.ax;
+			var $ = layui.$
+				, admin = layui.admin
+				, element = layui.element
+				, layer = layui.layer
+				, form = layui.form;
+
+			form.render(null, 'component-form-group');
+
+
+			/* 监听指定开关 */
+			form.on('submit(component-form-demo1)', function (data) {
+				var ajax = new $ax("/Config/setOutSetting", function (data) {
+					layer.msg('@StringLocalizer["SaveOk"]', {
+						shade: 0.8
+						, icon: 1
+						, time: 1000
+					}, function () {
+						location.reload();
+					});
+				}, function (data) {
+					layer.msg('@StringLocalizer["SaveFailed"]', {
+						shade: 0.8
+						, icon: 2
+						, time: 1000
+					}, function () {
+					});
+				});
+				ajax.set(data.field);
+				ajax.start();
+				return false;
+			});
+
+		});
+    </script>
+</body>
+</html>
+
+

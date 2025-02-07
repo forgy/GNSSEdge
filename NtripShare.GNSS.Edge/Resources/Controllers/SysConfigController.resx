@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AgeOfDiff" xml:space="preserve">
+    <value>Age Of Diff</value>
+  </data>
+  <data name="Antenna" xml:space="preserve">
+    <value>Antenna</value>
+  </data>
+  <data name="AtennaSetting" xml:space="preserve">
+    <value>AtennaSetting</value>
+  </data>
+  <data name="AuthorizationCode" xml:space="preserve">
+    <value>Authorization Code</value>
+  </data>
+  <data name="AuthorizedFailed" xml:space="preserve">
+    <value>The authorization code is invalid,authorization failed!</value>
+  </data>
+  <data name="AuthorizedOK" xml:space="preserve">
+    <value>Authorization Success!</value>
+  </data>
+  <data name="Azimuth" xml:space="preserve">
+    <value>Azimuth</value>
+  </data>
+  <data name="BaseCoord" xml:space="preserve">
+    <value>Base Coordinate</value>
+  </data>
+  <data name="BaseCoordinate" xml:space="preserve">
+    <value>Base Coordinate</value>
+  </data>
+  <data name="BaseID" xml:space="preserve">
+    <value>Base ID</value>
+  </data>
+  <data name="CloseAll" xml:space="preserve">
+    <value>Close All  Tabs</value>
+  </data>
+  <data name="CloseOthers" xml:space="preserve">
+    <value>Close Others Tabs</value>
+  </data>
+  <data name="CloseThis" xml:space="preserve">
+    <value>Close This Tab</value>
+  </data>
+  <data name="CloseTime" xml:space="preserve">
+    <value>Auto Close</value>
+  </data>
+  <data name="DeviceCode" xml:space="preserve">
+    <value>Device Code</value>
+  </data>
+  <data name="EfuseID" xml:space="preserve">
+    <value>Sn</value>
+  </data>
+  <data name="Elevation" xml:space="preserve">
+    <value>Elevation</value>
+  </data>
+  <data name="Firmware" xml:space="preserve">
+    <value>Firmware</value>
+  </data>
+  <data name="HardwareVersion" xml:space="preserve">
+    <value>Hw Version</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="IO" xml:space="preserve">
+    <value>I/O Configuration</value>
+  </data>
+  <data name="IoSummary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="LocalTime" xml:space="preserve">
+    <value>Local Time</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="LogMessage" xml:space="preserve">
+    <value>Log Messages</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordSetting" xml:space="preserve">
+    <value>Password Setting</value>
+  </data>
+  <data name="PublicTime" xml:space="preserve">
+    <value>Public Date</value>
+  </data>
+  <data name="PublishTime" xml:space="preserve">
+    <value>Publish Time</value>
+  </data>
+  <data name="RecieverConfiguration" xml:space="preserve">
+    <value>Reciever Configuration</value>
+  </data>
+  <data name="RecieverStatus" xml:space="preserve">
+    <value>Reciever Status</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RepeatPassword" xml:space="preserve">
+    <value>Repeat</value>
+  </data>
+  <data name="ResetPasswordConfirm" xml:space="preserve">
+    <value>Are you sure to set the Password to “password”?</value>
+  </data>
+  <data name="RestartConfirm" xml:space="preserve">
+    <value>Are you sure to restart?</value>
+  </data>
+  <data name="RestartOK" xml:space="preserve">
+    <value>Restart Success</value>
+  </data>
+  <data name="Satellite" xml:space="preserve">
+    <value>Satellite</value>
+  </data>
+  <data name="SatelliteList" xml:space="preserve">
+    <value>Satellite List</value>
+  </data>
+  <data name="SatelliteSNR" xml:space="preserve">
+    <value>Satellite SNR</value>
+  </data>
+  <data name="SatellitesTracked" xml:space="preserve">
+    <value>Satellites Tracked</value>
+  </data>
+  <data name="SatelliteTrack" xml:space="preserve">
+    <value>Tracking</value>
+  </data>
+  <data name="SaveFailed" xml:space="preserve">
+    <value>Succes</value>
+  </data>
+  <data name="SaveOk" xml:space="preserve">
+    <value>Succes</value>
+  </data>
+  <data name="SerialConfig" xml:space="preserve">
+    <value>Serial</value>
+  </data>
+  <data name="SkyView" xml:space="preserve">
+    <value>Sky View</value>
+  </data>
+  <data name="SNR" xml:space="preserve">
+    <value>SNR</value>
+  </data>
+  <data name="SoftKey" xml:space="preserve">
+    <value>Soft Key</value>
+  </data>
+  <data name="SwVersion" xml:space="preserve">
+    <value>Sw Version</value>
+  </data>
+  <data name="SysName" xml:space="preserve">
+    <value>NtripShare GNSS Reciever Configuration System</value>
+  </data>
+  <data name="SystemConfig" xml:space="preserve">
+    <value>System Config</value>
+  </data>
+  <data name="UpnpSetting" xml:space="preserve">
+    <value>Upnp</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="WebVersion" xml:space="preserve">
+    <value>Web Version</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="WifiSetting" xml:space="preserve">
+    <value>WiFi Setting</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="WorkMode" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="WiFiHotspot" xml:space="preserve">
+    <value>WiFi Hotspot</value>
+  </data>
+  <data name="Authorized" xml:space="preserve">
+    <value>Authorized</value>
+  </data>
+  <data name="AutoBase" xml:space="preserve">
+    <value>AutoBase</value>
+  </data>
+  <data name="Base" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="Coordinate" xml:space="preserve">
+    <value>Coordinate</value>
+  </data>
+  <data name="Ellipsoid" xml:space="preserve">
+    <value>Ellipsoid</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="NAV" xml:space="preserve">
+    <value>Navi Data</value>
+  </data>
+  <data name="OBS" xml:space="preserve">
+    <value>OBS Data</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="Rover" xml:space="preserve">
+    <value>Rover</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>UserName</value>
+  </data>
+  <data name="UTC" xml:space="preserve">
+    <value>UTC</value>
+  </data>
+</root>

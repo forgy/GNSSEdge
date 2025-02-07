@@ -1,0 +1,26 @@
+{
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "配置文件 1": {
+      "commandName": "Project",
+      "launchBrowser": true
+    },
+    "配置文件 2": {
+      "commandName": "Executable"
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:2868",
+      "sslPort": 0
+    }
+  }
+}

@@ -1,0 +1,134 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Authors>M.Peng</Authors>
+		<Company>M.Peng</Company>
+		<Product>NtripShare GNSS接收机配置系统</Product>
+		<Version>24.10.20</Version>
+		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
+		<Copyright>Copyright © 2023 NtripShare All Rights Reserved.</Copyright>
+		<PackageProjectUrl>www.ntripshare.com</PackageProjectUrl>
+		<PackageIcon>logo.png</PackageIcon>
+		<ApplicationIcon>logo.ico</ApplicationIcon>
+		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="wwwroot\assets\**" />
+	  <Content Remove="wwwroot\assets\**" />
+	  <EmbeddedResource Remove="wwwroot\assets\**" />
+	  <None Remove="wwwroot\assets\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Remove="log4net.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Remove="Resources\Controllers.LoginController.en-US.resx" />
+		<EmbeddedResource Remove="Resources\Controllers\HomeController.en-US.resx" />
+		<EmbeddedResource Remove="Resources\Controllers\IOController.en-US.resx" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="logo.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Resources\Controllers\AboutController.en-US.resx" />
+		<None Include="Resources\Controllers\SysConfigController.en-US.resx" />
+		<None Include="Resources\Controllers\IOController.en-US.resx" />
+		<None Include="Resources\Controllers\ConfigController.en-US.resx" />
+		<None Include="Resources\Controllers\HomeController.en-US.resx" />
+		<None Include="Resources\Controllers\IndexController.en-US.resx" />
+		<None Include="Resources\Controllers\LoginController.en-US.resx" />
+		<None Include="log4net.config">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include="wwwroot\lib\echarts\china.js" />
+		<None Include="wwwroot\lib\echarts\echarts-wordcloud.min.js" />
+		<None Include="wwwroot\lib\echarts\echarts.min.js" />
+		<None Include="wwwroot\lib\echarts\echartsTheme.js" />
+		<None Include="wwwroot\lib\layui-v2.6.3\font\iconfont.svg" />
+		<None Include="wwwroot\lib\layui-v2.6.3\font\iconfont.woff2" />
+		<None Include="wwwroot\lib\layuiadmin\config.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\console\prograss.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\console\top-card.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\console\top-search.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\content\comment.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\content\list.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\content\tags.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\forum\list.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\forum\replys.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\message\all.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\message\detail.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\message\direct.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\message\notice.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\useradmin\mangadmin.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\useradmin\role.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\useradmin\webuser.js" />
+		<None Include="wwwroot\lib\layuiadmin\json\workorder\demo.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\font\iconfont.svg" />
+		<None Include="wwwroot\lib\layuiadmin\layui\layui.all.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\layui.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\carousel.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\code.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\element.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\flow.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\form.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\jquery.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\laydate.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\layedit.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\layer.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\laypage.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\laytpl.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\mobile.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\rate.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\table.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\tree.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\upload.js" />
+		<None Include="wwwroot\lib\layuiadmin\layui\lay\modules\util.js" />
+		<None Include="wwwroot\lib\layuiadmin\lib\admin.js" />
+		<None Include="wwwroot\lib\layuiadmin\lib\extend\echarts.js" />
+		<None Include="wwwroot\lib\layuiadmin\lib\extend\echartsTheme.js" />
+		<None Include="wwwroot\lib\layuiadmin\lib\index.js" />
+		<None Include="wwwroot\lib\layuiadmin\lib\view.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\common.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\console.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\contlist.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\forum.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\message.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\sample.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\senior.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\set.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\useradmin.js" />
+		<None Include="wwwroot\lib\layuiadmin\modules\workorder.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="log4net" Version="2.0.15" />
+		<PackageReference Include="UPnP" Version="1.1.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\NtripShare.GNSS.Device\NtripShare.GNSS.Device.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="frpc">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="frpc.toml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="frpc2.toml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="frpc64">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+</Project>

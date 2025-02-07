@@ -1,0 +1,172 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<SysConfigController> StringLocalizer
+@{
+    ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body class="layui-layout-body">
+
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15" style="margin-bottom:60px">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">@StringLocalizer["Firmware"]</div>
+                    <div class="layui-card-body" style="overflow:scroll">
+                        <div class="layui-form" lay-filter="">
+                            <div class="layui-form-item">
+                                <table class="layui-table " lay-size="sm">
+                                    <colgroup>
+                                        <col width="100">
+                                        <col>
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <td>@StringLocalizer["Version"]</td>
+                                            <td>@ViewData["Version"]</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@StringLocalizer["PublishTime"]</td>
+                                            <td>@ViewData["PublishTime"]</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@StringLocalizer["DeviceCode"]</td>
+                                            <td>@ViewData["EfuseID"]</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@StringLocalizer["AuthorizationCode"]</td>
+                                            <td>@ViewData["SoftKey"]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="layui-form" lay-filter="">
+                            <div class="layui-form-item">
+                                <div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+                                    <i class="layui-icon layui-icon-upload"></i>
+                                    <div>点击上传更新固件，或将固件文件拖拽到此处</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form" lay-filter="">
+                            <div class="layui-form" lay-filter="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">@StringLocalizer["AuthorizationCode"]</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" id="register" name="register" placeholder="@StringLocalizer["AuthorizationCode"]" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <button class="layui-btn" id="getBtn">@StringLocalizer["Authorized"]</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/layuiadmin/layui/layui.js"></script>
+    <script>
+		layui.config({
+			base: '/lib/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+        }).use(['index', 'form', 'laydate', "ax", "upload", "element"], function () {
+            var upload = layui.upload;
+			var $ax = layui.ax;
+			var $ = layui.$
+				, admin = layui.admin
+				, element = layui.element
+				, layer = layui.layer
+				, laydate = layui.laydate
+				, form = layui.form;
+			$("#getBtn").click(function () {
+				$.get("/SysConfig/setKey?key=" + $("#register").val(), {}, function (data) {
+					$("#selectNtripMountPointDiv").css('display', 'block');
+					if (data.code === 200) {
+						layer.msg('@StringLocalizer["AuthorizedOK"]', {
+							shade: 0.8
+							, icon: 1
+							, time: 1000
+						}, function () {
+							location.reload();
+						});
+					} else {
+						layer.msg('@StringLocalizer["AuthorizedFailed"]', {
+							shade: 0.8
+							, icon: 2
+							, time: 1000
+						}, function () {
+						});
+					}
+				}, "json");
+			});
+            upload.render({
+                elem: '#ID-upload-demo-drag',
+                url: '/Update/FileSave', // 实际使用时改成您自己的上传接口即可。
+                accept: 'file',
+                acceptMime: '.bin',
+                exts: 'bin',
+                before: function (obj) {
+                    element.progress('demo', '0%'); //进度条复位
+                    layer.msg('上传中',  shade: 0.8,{ icon: 16, time: 0 });
+                },
+                error: function () {
+                    layer.msg('上传失败！', {
+                        shade: 0.8
+                        , icon: 2
+                        , time: 1000
+                    }, function () {
+                    });
+                }, 
+                done: function (res) {
+                    if (res.success) {
+                        if (confirm('上传固件成功，固件版本：' + res.version + ",发行日期：" + res.publicTime + ",是否立即更新？")) { //只有当点击confirm框的确定时，该层才会关闭
+                            var ajax = new $ax("/Update/updateFirmware", function (data) {
+                                 layer.msg('更新成功，请重启接收机', {
+                                     shade: 0.8
+                                     , icon: 1
+                                     , time: 1000
+                                 }, function () {
+                                     location.reload();
+                                 });
+                             }, function (data) {
+                                 layer.msg('更新失败！', {
+                                     shade: 0.8
+                                     , icon: 2
+                                     , time: 1000
+                                 }, function () {
+                                 });
+                             });
+                             ajax.start();
+
+                             layer.close(index)
+                         }
+
+                    } else {
+                        layer.msg('固件上传失败-' + res.msg);
+                    }
+                }
+            });
+
+		});
+    </script>
+</body>
+</html>
+
+

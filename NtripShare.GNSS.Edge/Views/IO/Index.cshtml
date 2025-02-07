@@ -1,0 +1,536 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<IOController> StringLocalizer
+@{
+	ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+	
+	<div class="layui-fluid" id="data">
+		<div class="layui-row layui-col-space15" style="margin-bottom:60px">
+			<div class="layui-col-md12">
+				<div class="layui-card layui-col-md12" >
+					<div class="layui-card-header">@StringLocalizer["IO"]</div>
+					<div class="layui-card-body">
+						<table class="layui-table "  style="align-content:center" lay-size="sm">
+							<thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Port</th>
+                                    <th>Stream</th>
+                                    <th>On</th>
+                                    <th>Conn</th>
+                                    <th>Auth</th>
+                                    <th></th>
+                                </tr>
+							</thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a lay-href="/IO/NtripCaster?culture=@CultureInfo.CurrentCulture.Name">Ntrip Caster</a>
+                                    </td>
+                                    <td>@Model.CasterPort</td>
+                                    <td>
+                                        <p>RTCM3</p>
+                                    </td>
+                                    <td>
+                                        @if (Model.CasterStart)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.CasterConnected)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.CasterAuth)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/NtripCaster?culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs">  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td> <a lay-href="/IO/Com?culture=@CultureInfo.CurrentCulture.Name">COM</a></td>
+                                    <td>@Model.ComName</td>
+                                    <td>
+                                        @if (Model.ComSerialStream == "rtcm3")
+                                        {
+                                            <p>RTCM3</p>
+                                        }
+                                        else
+                                        {
+                                            <p>	NMEA-0183</p>
+                                        }
+                                    </td>
+                                    <td><i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i></td>
+                                    <td><i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i></td>
+                                    <td><i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i></td>
+                                    <td><a href="/IO/Com?culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td> <a lay-href="/IO/Tcp?channel=1&culture=@CultureInfo.CurrentCulture.Name">TCP1</a></td>
+                                    <td>@Model.TCPServer</td>
+                                    <td>
+                                        @if (Model.TcpSerialStream == "rtcm3")
+                                        {
+                                            <p>RTCM3</p>
+                                        }
+                                        else
+                                        {
+                                            <p>	NMEA-0183</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpStart)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpConnected)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpAuth)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/Tcp?channel=1&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td><a lay-href="/IO/Tcp?channel=2&culture=@CultureInfo.CurrentCulture.Name">TCP2</a></td>
+                                    <td>@Model.TCPServer2</td>
+                                    <td>
+                                        @if (Model.TcpSerialStream2 == "rtcm3")
+                                        {
+                                            <p>RTCM3</p>
+                                        }
+                                        else
+                                        {
+                                            <p>	NMEA-0183</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpStart2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpConnected2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpAuth2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/Tcp?channel=2&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td><a lay-href="/IO/Tcp?channel=3&culture=@CultureInfo.CurrentCulture.Name">TCP3</a></td>
+                                    <td>@Model.TCPServer3</td>
+                                    <td>
+                                        @if (Model.TcpSerialStream3 == "rtcm3")
+                                        {
+                                            <p>RTCM3</p>
+                                        }
+                                        else
+                                        {
+                                            <p>	NMEA-0183</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpStart3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpConnected3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.TcpAuth3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/Tcp?channel=3&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td> <a lay-href="/IO/NtripClient?channel=1&culture=@CultureInfo.CurrentCulture.Name">Ntrip Client1</a></td>
+                                    <td>@Model.NtripClientServer</td>
+                                    <td><p>	NMEA-0183</p></td>
+                                    <td>
+                                        @if (Model.NtripClientStart)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripClientConnected)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripClientAuth)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/NtripClient?channel=1&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                @*<tr>
+                                    <td> <a lay-href="/IO/NtripClient?channel=2&culture=@CultureInfo.CurrentCulture.Name">Ntrip Client2</a></td>
+                                    <td>@Model.NtripClientServer2</td>
+                                    <td><p>	NMEA-0183</p></td>
+                                    <td>
+                                        @if (Model.NtripClientStart2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripClientConnected2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripClientAuth2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/NtripClient?channel=2&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td> <a lay-href="/IO/NtripClient?channel=3&culture=@CultureInfo.CurrentCulture.Name">Ntrip Client3</a></td>
+                                    <td>@Model.NtripClientServer3</td>
+                                    <td><p>	NMEA-0183</p></td>
+                                    <td>
+                                        @if (Model.NtripClientStart3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripClientConnected3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripClientAuth3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/NtripClient?channel=3&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>*@
+                                <tr>
+                                    <td> <a lay-href="/IO/NtripServer?channel=1&culture=@CultureInfo.CurrentCulture.Name">Ntrip Server1</a></td>
+                                    <td>@Model.NtripServerServer</td>
+                                    <td><p>RTCM3</p></td>
+                                    <td>
+                                        @if (Model.NtripSeverStart)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripSeverConnected)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripSeverAuth)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/NtripServer?channel=1&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td> <a lay-href="/IO/NtripServer?channel=2&culture=@CultureInfo.CurrentCulture.Name">Ntrip Server2</a></td>
+                                    <td>@Model.NtripServerServer2</td>
+                                    <td><p>RTCM3</p></td>
+                                    <td>
+                                        @if (Model.NtripSeverStart2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripSeverConnected2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripSeverAuth2)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/NtripServer?channel=2&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs">  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td> <a lay-href="/IO/NtripServer?channel=3&culture=@CultureInfo.CurrentCulture.Name">Ntrip Server3</a></td>
+                                    <td>@Model.NtripServerServer3</td>
+                                    <td><p>RTCM3</p></td>
+                                    <td>
+                                        @if (Model.NtripSeverStart3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripSeverConnected3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.NtripSeverAuth3)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/NtripServer?channel=3&culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                                <tr>
+                                    <td> <a lay-href="/IO/Mqtt?culture=@CultureInfo.CurrentCulture.Name">MQTT</a></td>
+                                    <td>@Model.MQTTServer</td>
+                                    <td>
+                                        @if (Model.MQTTSerialStream == "rtcm3")
+                                        {
+                                            <p>RTCM3</p>
+                                        }
+                                        else
+                                        {
+                                            <p>	NMEA-0183</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.MQTTStart)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.MQTTConnected)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (Model.MQTTAuth)
+                                        {
+                                            <i class="layui-icon layui-icon-vercode" style=" color: #009688;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="layui-icon layui-icon-tips" style=" color: #FF5722;"></i>
+                                        }
+                                    </td>
+                                    <td><a href="/IO/Mqtt?culture=@CultureInfo.CurrentCulture.Name" class="layui-btn layui-btn-xs" >  <i class="layui-icon">&#xe642;</i></a></td>
+                                </tr>
+                            </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div id="tmp" hidden></div>
+	<script src="~/lib/layuiadmin/layui/layui.js"></script>
+	<script>
+		layui.config({
+			base: '/lib/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index', 'form', 'laydate', "ax"], function () {
+			var $ax = layui.ax;
+			var $ = layui.$
+				, admin = layui.admin
+				, element = layui.element
+				, layer = layui.layer
+				, laydate = layui.laydate
+				, form = layui.form;
+
+			setInterval(function () {
+				$.get(location.pathname, function (data) {
+					// 该例子无需执行返回的js，如果需要执行可使用jquery的html()，而不是innerHTML
+					$("#tmp")[0].innerHTML = data    // 不加载执行js, 查找资料说可以使用jquery的parseHTML的，但是我这里报未定义函数，暂不深究了
+					$("#data").html($("#tmp").find("#data").html()) // ajax返回的html页面内容临时放入tmp中，方便获取指定dom节点。替换掉原来界面的数据
+					$("#tmp")[0].innerHTML = ""
+				})
+
+			}, 2000);
+
+
+		});
+	</script>
+	</script>
+</body>
+</html>
+
+

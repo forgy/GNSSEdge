@@ -1,0 +1,112 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<ConfigController> StringLocalizer
+@{
+	ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card" style="margin-bottom:60px">
+			<div class="layui-card-header">@StringLocalizer["SatelliteTrack"]</div>
+			<div class="layui-card-body" style="padding: 15px;">
+                <form class="layui-form" action="" lay-filter="component-form-group">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["Elevation"]</label>
+                        <div class="layui-input-block">
+                            <input type="text" value="@Model.SatelliteElevation" name="SatelliteElevation"
+                                   autocomplete="off" placeholder="Satellite Elevation" class="layui-input" lay-verify="number">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["Track"]</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="UseGPS" title="GPS" checked="@Model.UseGPS" value="true">
+                            <input type="checkbox" name="UseBDS" title="BDS" checked="@Model.UseBDS" value="true">
+                            <input type="checkbox" name="UseGLO" title="Glonass" checked="@Model.UseGLO" value="true">
+                            <input type="checkbox" name="UseGAL" title="Galileo" checked="@Model.UseGAL" value="true">
+                            <input type="checkbox" name="UseQZSS" title="QZSS" checked="@Model.UseQZSS" value="true">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">B2B-PPP</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="B2BPPP" value="true"  lay-skin="switch" lay-text="ON|OFF" checked="@Model.B2BPPP">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">@StringLocalizer["Smooth"]</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="Smooth" value="true"  lay-skin="switch" lay-text="ON|OFF" checked="@Model.Smooth">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-layout-admin">
+                        <div class="layui-input-block">
+                            <div style="left: 0;">
+                                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">@StringLocalizer["Save"]</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="~/lib/layuiadmin/layui/layui.js"></script>
+	<script>
+		layui.config({
+			base: '/lib/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index', 'form', 'laydate', "ax"], function () {
+			var $ax = layui.ax;
+			var $ = layui.$
+				, admin = layui.admin
+				, element = layui.element
+				, layer = layui.layer
+				, laydate = layui.laydate
+				, form = layui.form;
+
+
+			/* 监听提交 */
+			form.on('submit(component-form-demo1)', function (data) {
+				var ajax = new $ax("/Config/setSatelliteTrack", function (data) {
+					layer.msg('@StringLocalizer["SaveOk"]', {
+						shade: 0.8
+						, icon: 1
+						, time: 1000
+					}, function () {
+						location.reload();
+					});
+				}, function (data) {
+					layer.msg('@StringLocalizer["SaveFailed"]', {
+						shade: 0.8
+						, icon: 2
+						, time: 1000
+					}, function () {
+					});
+				});
+				ajax.set(data.field);
+				ajax.start();
+				
+				return false;
+			});
+		});
+	</script>
+</body>
+</html>
+
+

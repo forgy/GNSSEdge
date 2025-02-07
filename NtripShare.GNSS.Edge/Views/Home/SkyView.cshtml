@@ -1,0 +1,285 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<HomeController> StringLocalizer
+@{
+	ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15" style="margin-bottom:60px">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">@StringLocalizer["SkyView"]</div>
+					<div class="layui-card-body" style="height: 300px;">
+						<div id="skyView" class="layui-col-md12" style="height:300px">
+						</div>
+					</div>
+				</div>
+				<div class="layui-card">
+					<div class="layui-card-header">@StringLocalizer["SatelliteSNR"]</div>
+					<div class="layui-card-body" style="height: 300px;">
+						<div id="snrView" class="layui-col-md12" style="height:300px">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="~/lib/echarts/echarts.min.js"></script>
+	<script src="~/lib/echarts/echartsTheme.js"></script>
+	<script src="~/lib/layuiadmin/layui/layui.js"></script>
+
+	<script>
+		layui.config({
+			base: '/lib/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index', "ax"], function () {
+			var $ax = layui.ax;
+			var $ = layui.$
+				, setter = layui.setter
+				, admin = layui.admin
+				, form = layui.form
+				, router = layui.router()
+				, search = router.search;
+
+			var ProxyClient = {};
+			var skyCharts;
+			var gpsCharts;
+
+			ProxyClient.updateData = function () {
+				var ajax = new $ax("/Home/Satellites", function (data) {
+					data = data.data;
+					var posGPS = [];
+					var posBD = [];
+					var posGlonass = [];
+					var posGalileo = [];
+					var posQzss = [];
+					var posSbas = [];
+
+
+					var xAxisDataGPS = [];
+					var seriesGPS1 = [];
+					var seriesGPS2 = [];
+					var seriesGPS3 = [];
+					var seriesGPS4 = [];
+					var seriesGPS5 = [];
+					var seriesGPS6 = [];
+
+					for (var i = 0; i < data.length; i++) {
+						var name = "";
+						if (data[i].elevation === 0 && data[i].azimuth === 0) 
+						{ 
+							continue;
+						}
+						if (data[i].sys.indexOf("GPS") >= 0) {
+							posGPS.push([data[i].elevation, data[i].azimuth, "G" + data[i].prn]);
+							name = "G" + data[i].prn;
+						} else if (data[i].sys.indexOf("BDS") >= 0) {
+							posBD.push([data[i].elevation, data[i].azimuth, "C" + data[i].prn]);
+							name = "C" + data[i].prn;
+						} else if (data[i].sys.indexOf("GALILEO") >= 0) {
+							posGalileo.push([data[i].elevation, data[i].azimuth, "E" + data[i].prn]);
+							name = "E" + data[i].prn;
+						} else if (data[i].sys.indexOf("GLONASS") >= 0) {
+							posGlonass.push([data[i].elevation, data[i].azimuth, "R" + data[i].prn]);
+							name = "R" + data[i].prn;
+						} else if (data[i].sys.indexOf("QZSS") >= 0) {
+							posQzss.push([data[i].elevation, data[i].azimuth, "J" + data[i].prn]);
+							name = "J" + data[i].prn;
+						}
+						xAxisDataGPS.push(name);
+						seriesGPS1.push(data[i].snr);
+					}
+
+					var optionSat = {
+						legend: {
+							data: ['GPS', 'BDS', 'GLO', 'GAL', 'QZSS'],
+							orient: 'vertical',
+							right: 10,
+							top: 20,
+							bottom: 20
+						},
+						polar: {},
+						angleAxis: {
+							type: 'value',
+							min: 0,
+							max: 360,
+							boundaryGap: false,
+							splitLine: {
+								show: true
+							},
+							axisLine: {
+								show: false
+							}
+						},
+						radiusAxis: {
+							min: 0,
+							max: 90,
+							inverse: true
+						},
+						series: [{
+							name: 'GPS',
+							type: 'scatter',
+							coordinateSystem: 'polar',
+							symbolSize: function (val) {
+								return 25;
+							},
+							label: {
+								show: true,
+								formatter: function (val) {
+									return val.data[2];
+								}
+							},
+							data: posGPS,
+							animationDelay: function (idx) {
+								return idx * 5;
+							}
+						},
+						{
+							name: 'BDS',
+							type: 'scatter',
+							coordinateSystem: 'polar',
+							symbolSize: function (val) {
+								return 25;
+							},
+							label: {
+								show: true,
+								formatter: function (val) {
+									return val.data[2];
+								}
+							},
+							data: posBD,
+							animationDelay: function (idx) {
+								return idx * 5;
+							}
+						},
+						{
+							name: 'GLO',
+							type: 'scatter',
+							coordinateSystem: 'polar',
+							symbolSize: function (val) {
+								return 25;
+							},
+							label: {
+								show: true,
+								formatter: function (val) {
+									return val.data[2];
+								}
+							},
+							data: posGlonass,
+							animationDelay: function (idx) {
+								return idx * 5;
+							}
+						},
+						{
+							name: 'GAL',
+							type: 'scatter',
+							coordinateSystem: 'polar',
+							symbolSize: function (val) {
+								return 25;
+							},
+							label: {
+								show: true,
+								formatter: function (val) {
+									return val.data[2];
+								}
+							},
+							data: posGalileo,
+							animationDelay: function (idx) {
+								return idx * 5;
+							}
+						},
+						{
+							name: 'QZSS',
+							type: 'scatter',
+							coordinateSystem: 'polar',
+							symbolSize: function (val) {
+								return 25;
+							},
+							label: {
+								show: true,
+								formatter: function (val) {
+									return val.data[2];
+								}
+							},
+							data: posQzss,
+							animationDelay: function (idx) {
+								return idx * 5;
+							}
+						}]
+					};
+					if (skyCharts == null) {
+						skyCharts = echarts.init(document.getElementById('skyView'), myEchartsTheme);
+					}
+					skyCharts.setOption(optionSat);
+
+					var optionGPS = {
+						title: {
+							left: 'center',
+							text: 'SNR',
+							top: 'bottom'
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'shadow'
+							}
+						},
+						xAxis: [
+							{
+								type: 'category',
+								axisTick: { show: false },
+								data: xAxisDataGPS
+							}
+						],
+						yAxis: [
+							{
+								type: 'value',
+								min: 0,
+								max: 80
+							}
+						],
+						series: [
+							{
+								name: 'SNR',
+								type: 'bar',
+								barGap: 0,
+								emphasis: {
+									focus: 'series'
+								},
+								data: seriesGPS1
+							}
+						]
+					};
+					if (gpsCharts == null) {
+						gpsCharts = echarts.init(document.getElementById('snrView'), myEchartsTheme);
+					}
+					gpsCharts.setOption(optionGPS);
+				});
+				// 渲染活动情况预测
+				ajax.start();
+			};
+
+			setInterval(function () {
+				ProxyClient.updateData();
+			}, 1000);
+		});
+	</script>
+</body>
+</html>
+
+

@@ -1,0 +1,220 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<IndexController> StringLocalizer
+@{
+	ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body class="layui-layout-body">
+
+    <div id="LAY_app">
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <!-- 头部区域 -->
+                <ul class="layui-nav layui-layout-left">
+                    <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                        <a href="javascript:;" layadmin-event="flexible" title="@StringLocalizer["Hide"]">
+                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;" layadmin-event="refresh" title="@StringLocalizer["Refresh"]">
+                            <i class="layui-icon layui-icon-refresh-3"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="theme">
+                            <i class="layui-icon layui-icon-theme"></i>
+                        </a>
+                    </li>
+                    @* <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="note">
+                            <i class="layui-icon layui-icon-note"></i>
+                        </a>
+                    </li> *@
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="fullscreen">
+                            <i class="layui-icon layui-icon-screen-full"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;">
+                            <cite>@ViewData["User"]</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-href="/SysConfig/Pass">@StringLocalizer["Password"]</a></dd>
+                            <hr>
+                            <dd><a lay-href="/Logout">@StringLocalizer["Logout"]</a></dd>
+                        </dl>
+                    </li>
+
+                @*     <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li>
+                    <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                        <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li> *@
+                </ul>
+            </div>
+
+            <!-- 侧边菜单 -->
+            <div class="layui-side layui-side-menu">
+                <div class="layui-side-scroll">
+                    <div class="layui-logo">
+                        <span>NtripShare GNSS</span>
+                    </div>
+
+                    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+                        <li data-name="device" class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;" lay-tips="@StringLocalizer["RecieverStatus"]" lay-direction="2">
+                                <i class="layui-icon layui-icon-component"></i>
+                                <cite>@StringLocalizer["RecieverStatus"]</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="console" class="layui-this">
+                                    <a lay-href="/Home/Version?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["Version"]</a>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/Home/Satellite?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["SatelliteList"]</a>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/Home/SkyView?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["SkyView"]</a>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/Home/Location?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["Location"]</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="device" class="layui-nav-item ">
+                            <a href="javascript:;" lay-tips="@StringLocalizer["RecieverConfiguration"]" title="@StringLocalizer["RecieverConfiguration"]" lay-direction="2">
+                                <i class="layui-icon layui-icon-set"></i>
+                                <cite>@StringLocalizer["RecieverConfiguration"]</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="config">
+                                    <a lay-href="/Config/SatelliteTrack?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["SatelliteTrack"]</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/Config/WorkMode?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["WorkMode"]</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/Config/Antenna?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["Antenna"]</a>
+                                </dd>
+                             
+                            </dl>
+                        </li>
+                        <li data-name="device" class="layui-nav-item ">
+                            <a href="javascript:;" lay-tips="@StringLocalizer["IO"]" lay-direction="2">
+                                <i class="layui-icon layui-icon-senior"></i>
+                                <cite>@StringLocalizer["IO"]</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="config">
+                                    <a lay-href="/Config/OutSetting?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["LogMessage"]</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["IoSummary"]</a>
+                                </dd>
+                                @*<dd data-name="data">
+                                    <a lay-href="/IO/Com?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["SerialConfig"]</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/Tcp?culture=@CultureInfo.CurrentCulture.Name">TCP</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/NtripCaster?culture=@CultureInfo.CurrentCulture.Name" ">Ntrip Caster</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/NtripServer?culture=@CultureInfo.CurrentCulture.Name">Ntrip Server</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/NtripClient?culture=@CultureInfo.CurrentCulture.Name">Ntrip Client</a>
+                                </dd>
+                                <dd data-name="data">
+                                    <a lay-href="/IO/Mqtt?culture=@CultureInfo.CurrentCulture.Name">MQTT</a>
+                                </dd>*@
+                            </dl>
+                        </li>
+                        <li data-name="device" class="layui-nav-item ">
+                            <a href="javascript:;" lay-tips="@StringLocalizer["SystemConfig"]" lay-direction="2">
+                                <i class="layui-icon layui-icon-set"></i>
+                                <cite>@StringLocalizer["SystemConfig"]</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="config">
+                                    <a lay-href="/SysConfig/Upnp?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["UpnpSetting"]</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/SysConfig/Wifi?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["WifiSetting"]</a>
+                                </dd>
+                                <dd data-name="config">
+                                    <a lay-href="/SysConfig/Pass?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["Password"]</a>
+                                </dd>
+                                 <dd data-name="config">
+                                    <a lay-href="/SysConfig/Restart?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["Restart"]</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li data-name="device" class="layui-nav-item ">
+                            <a href="javascript:;" lay-tips="@StringLocalizer["About"]" lay-direction="2">
+                                <i class="layui-icon layui-icon-auz"></i>
+                                <cite>@StringLocalizer["About"]</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="config">
+                                    <a lay-href="/SysConfig/SoftVersion?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["Firmware"]</a>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/About?culture=@CultureInfo.CurrentCulture.Name">@StringLocalizer["About"]</a>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- 主体内容 -->
+            <div class="layui-body" id="LAY_app_body">
+                <div class="layadmin-tabsbody-item layui-show">
+                    <iframe src="/Home/Version?culture=@CultureInfo.CurrentCulture.Name" frameborder="0" class="layadmin-iframe"></iframe>
+                </div>
+            </div>
+            <div class="layui-footer" style="z-index:1000">
+                <!-- 底部固定区域 -->
+                <p>Powered By NtripShare © 2024</p>
+            </div>
+            <!-- 辅助元素，一般用于移动设备下遮罩 -->
+            <div class="layadmin-body-shade" layadmin-event="shade"></div>
+        </div>
+    </div>
+
+    <script src="/lib/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '/lib/layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', "ax"], function () {
+            var $ax = layui.ax;
+            var $ = layui.$;
+        });
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,11 @@
+serverAddr = "t.ntripshare.com"
+serverPort = 70
+auth.token = ""
+
+[[proxies]]
+name = "xxxxxssh"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 7023
+

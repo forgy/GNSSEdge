@@ -1,0 +1,565 @@
+﻿@using Microsoft.Extensions.Localization
+@using NtripShare.GNSS.Edge.Controllers
+@using System.Globalization
+@inject IStringLocalizer<IOController> StringLocalizer
+@{
+    ViewData["Title"] = "首页";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@StringLocalizer["Welcome"] - @StringLocalizer["SysName"]</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="~/lib/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/lib/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+    <div class="layui-fluid">
+        <div class="layui-card" style="margin-bottom:60px">
+            <div class="layui-card-header">Ntrip Server</div>
+            <div class="layui-card-body">
+                <div class="layui-tab layui-tab-card">
+                    <ul class="layui-tab-title">
+                        @if (Model.channel == 1)
+                        {
+                            <li class="layui-this">@StringLocalizer["Channel1"]</li>
+                            <li>@StringLocalizer["Channel2"]</li>
+                            <li>@StringLocalizer["Channel3"]</li>
+                        }
+                        else if (Model.channel == 2)
+                        {
+                            <li>@StringLocalizer["Channel1"]</li>
+                            <li class="layui-this">@StringLocalizer["Channel2"]</li>
+                            <li>@StringLocalizer["Channel3"]</li>
+                        }
+                        else if (Model.channel == 3)
+                        {
+                            <li>@StringLocalizer["Channel1"]</li>
+                            <li>@StringLocalizer["Channel2"]</li>
+                            <li class="layui-this">@StringLocalizer["Channel3"]</li>
+                        }
+                        else
+                        {
+                            <li class="layui-this">@StringLocalizer["Channel1"]</li>
+                            <li>@StringLocalizer["Channel2"]</li>
+                            <li>@StringLocalizer["Channel3"]</li>
+                        }
+                    </ul>
+                    <div class="layui-tab-content">
+                        @if (Model.channel == 1)
+                        {
+                            <div class="layui-tab-item layui-show">
+                                <form class="layui-form" action="" lay-filter="component-form-group">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Ntrip @StringLocalizer["Version"]</label>
+                                        <div class="layui-input-block">
+                                            @Html.RadioButton("NtripVersion", 1, Model.Channel1.NtripVersion == 1, new { @name = "NtripVersion", @title = "1.0" })
+                                            @*@Html.RadioButton("NtripVersion", 2, Model.Channel1.NtripVersion == 2, new { @name = "NtripVersion", @title = "2.0" })*@
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster IP</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="ip" name="NtripIP" lay-verify="required" placeholder="0:0:0:0" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripIP">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster @StringLocalizer["Port"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="port" name="NtripPort" lay-verify="number" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripPort">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Mount Point"]</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="NtripMountPoint" name="NtripMountPoint" lay-verify="required" placeholder="AUTO" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripMountPoint">
+                                        </div>
+                                        <div class="layui-input-inline" id="selectNtripMountPointDiv" style="display:none">
+                                            <select id="selectNtripMountPoint" lay-filter="aihao">
+                                            </select>
+                                        </div>
+                                        @* <div class="layui-input-inline">
+                                                <button type="button" id="getBtn" class="layui-btn " lay-size="sm">GET</button>
+                                            </div> *@
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["UserName"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripUserName" lay-verify="required" placeholder="UserName" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripUserName">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Password"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripPassword" lay-verify="required" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripPassword">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Start"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" checked="@Model.Channel1.NtripEnable" name="NtripEnable" lay-skin="switch" lay-text="ON|OFF" value="true">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-layout-admin">
+                                        <div class="layui-input-block">
+                                            <div style="left: 0;">
+                                                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">@StringLocalizer["Save"]</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="layui-tab-item">
+                                <form class="layui-form" action="" lay-filter="component-form-group">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Ntrip @StringLocalizer["Version"]</label>
+                                        <div class="layui-input-block">
+                                            @Html.RadioButton("NtripVersion", 1, Model.Channel1.NtripVersion == 1, new { @name = "NtripVersion", @title = "1.0" })
+                                            @*@Html.RadioButton("NtripVersion", 2, Model.Channel1.NtripVersion == 2, new { @name = "NtripVersion", @title = "2.0" })*@
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster IP</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="ip" name="NtripIP" lay-verify="required" placeholder="0:0:0:0" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripIP">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster @StringLocalizer["Port"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="port" name="NtripPort" lay-verify="number" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripPort">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Mount Point"]</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="NtripMountPoint" name="NtripMountPoint" lay-verify="required" placeholder="AUTO" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripMountPoint">
+                                        </div>
+                                        <div class="layui-input-inline" id="selectNtripMountPointDiv" style="display:none">
+                                            <select id="selectNtripMountPoint" lay-filter="aihao">
+                                            </select>
+                                        </div>
+                                        @* <div class="layui-input-inline">
+                                                <button type="button" id="getBtn" class="layui-btn " lay-size="sm">GET</button>
+                                            </div> *@
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["UserName"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripUserName" lay-verify="required" placeholder="UserName" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripUserName">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Password"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripPassword" lay-verify="required" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel1.NtripPassword">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Start"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" checked="@Model.Channel1.NtripEnable" name="NtripEnable" lay-skin="switch" lay-text="ON|OFF" value="true">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-layout-admin">
+                                        <div class="layui-input-block">
+                                            <div style="left: 0;">
+                                                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">@StringLocalizer["Save"]</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        }
+                        @if (Model.channel == 2)
+                        {
+                            <div class="layui-tab-item  layui-show">
+                                <form class="layui-form" action="" lay-filter="component-form-group">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Ntrip @StringLocalizer["Version"]</label>
+                                        <div class="layui-input-block">
+                                            @Html.RadioButton("NtripVersion", 1, Model.Channel2.NtripVersion == 1, new { @name = "NtripVersion", @title = "1.0" })
+                                            @*@Html.RadioButton("NtripVersion", 2, Model.Channel2.NtripVersion == 2, new { @name = "NtripVersion", @title = "2.0" })*@
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster IP</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="ip" name="NtripIP" lay-verify="required" placeholder="0:0:0:0" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripIP">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster @StringLocalizer["Port"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="port" name="NtripPort" lay-verify="number" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripPort">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Mount Point"]</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="NtripMountPoint" name="NtripMountPoint" lay-verify="required" placeholder="AUTO" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripMountPoint">
+                                        </div>
+                                        <div class="layui-input-inline" id="selectNtripMountPointDiv" style="display:none">
+                                            <select id="selectNtripMountPoint" lay-filter="aihao">
+                                            </select>
+                                        </div>
+                                        @* <div class="layui-input-inline">
+                                                <button type="button" id="getBtn" class="layui-btn " lay-size="sm">GET</button>
+                                            </div> *@
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["UserName"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripUserName" lay-verify="required" placeholder="UserName" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripUserName">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Password"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripPassword" lay-verify="required" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripPassword">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Start"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" checked="@Model.Channel2.NtripEnable" name="NtripEnable" lay-skin="switch" lay-text="ON|OFF" value="true">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-layout-admin">
+                                        <div class="layui-input-block">
+                                            <div style="left: 0;">
+                                                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo2">@StringLocalizer["Save"]</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="layui-tab-item">
+                                <form class="layui-form" action="" lay-filter="component-form-group">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Ntrip @StringLocalizer["Version"]</label>
+                                        <div class="layui-input-block">
+                                            @Html.RadioButton("NtripVersion", 1, Model.Channel2.NtripVersion == 1, new { @name = "NtripVersion", @title = "1.0" })
+                                            @*@Html.RadioButton("NtripVersion", 2, Model.Channel2.NtripVersion == 2, new { @name = "NtripVersion", @title = "2.0" })*@
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster IP</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="ip" name="NtripIP" lay-verify="required" placeholder="0:0:0:0" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripIP">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster @StringLocalizer["Port"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="port" name="NtripPort" lay-verify="number" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripPort">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Mount Point"]</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="NtripMountPoint" name="NtripMountPoint" lay-verify="required" placeholder="AUTO" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripMountPoint">
+                                        </div>
+                                        <div class="layui-input-inline" id="selectNtripMountPointDiv" style="display:none">
+                                            <select id="selectNtripMountPoint" lay-filter="aihao">
+                                            </select>
+                                        </div>
+                                        @* <div class="layui-input-inline">
+                                                <button type="button" id="getBtn" class="layui-btn " lay-size="sm">GET</button>
+                                            </div> *@
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["UserName"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripUserName" lay-verify="required" placeholder="UserName" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripUserName">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Password"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripPassword" lay-verify="required" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel2.NtripPassword">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Start"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" checked="@Model.Channel2.NtripEnable" name="NtripEnable" lay-skin="switch" lay-text="ON|OFF" value="true">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-layout-admin">
+                                        <div class="layui-input-block">
+                                            <div style="left: 0;">
+                                                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo2">@StringLocalizer["Save"]</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                        @if (Model.channel == 3)
+                        {
+                            <div class="layui-tab-item  layui-show">
+                                <form class="layui-form" action="" lay-filter="component-form-group">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Ntrip @StringLocalizer["Version"]</label>
+                                        <div class="layui-input-block">
+                                            @Html.RadioButton("NtripVersion", 1, Model.Channel3.NtripVersion == 1, new { @name = "NtripVersion", @title = "1.0" })
+                                            @*@Html.RadioButton("NtripVersion", 2, Model.Channel3.NtripVersion == 2, new { @name = "NtripVersion", @title = "2.0" })*@
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster IP</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="ip" name="NtripIP" lay-verify="required" placeholder="0:0:0:0" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripIP">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster @StringLocalizer["Port"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="port" name="NtripPort" lay-verify="number" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripPort">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Mount Point"]</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="NtripMountPoint" name="NtripMountPoint" lay-verify="required" placeholder="AUTO" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripMountPoint">
+                                        </div>
+                                        <div class="layui-input-inline" id="selectNtripMountPointDiv" style="display:none">
+                                            <select id="selectNtripMountPoint" lay-filter="aihao">
+                                            </select>
+                                        </div>
+                                        @* <div class="layui-input-inline">
+                                                <button type="button" id="getBtn" class="layui-btn " lay-size="sm">GET</button>
+                                            </div> *@
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["UserName"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripUserName" lay-verify="required" placeholder="UserName" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripUserName">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Password"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripPassword" lay-verify="required" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripPassword">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Start"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" checked="@Model.Channel3.NtripEnable" name="NtripEnable" lay-skin="switch" lay-text="ON|OFF" value="true">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-layout-admin">
+                                        <div class="layui-input-block">
+                                            <div style="left: 0;">
+                                                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo3">@StringLocalizer["Save"]</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="layui-tab-item">
+                                <form class="layui-form" action="" lay-filter="component-form-group">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Ntrip @StringLocalizer["Version"]</label>
+                                        <div class="layui-input-block">
+                                            @Html.RadioButton("NtripVersion", 1, Model.Channel3.NtripVersion == 1, new { @name = "NtripVersion", @title = "1.0" })
+                                            @*@Html.RadioButton("NtripVersion", 2, Model.Channel3.NtripVersion == 2, new { @name = "NtripVersion", @title = "2.0" })*@
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster IP</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="ip" name="NtripIP" lay-verify="required" placeholder="0:0:0:0" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripIP">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">Caster @StringLocalizer["Port"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" id="port" name="NtripPort" lay-verify="number" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripPort">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Mount Point"]</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="NtripMountPoint" name="NtripMountPoint" lay-verify="required" placeholder="AUTO" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripMountPoint">
+                                        </div>
+                                        <div class="layui-input-inline" id="selectNtripMountPointDiv" style="display:none">
+                                            <select id="selectNtripMountPoint" lay-filter="aihao">
+                                            </select>
+                                        </div>
+                                        @* <div class="layui-input-inline">
+                                                <button type="button" id="getBtn" class="layui-btn " lay-size="sm">GET</button>
+                                            </div> *@
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["UserName"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripUserName" lay-verify="required" placeholder="UserName" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripUserName">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Password"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="NtripPassword" lay-verify="required" placeholder="0" autocomplete="off" class="layui-input" value="@Model.Channel3.NtripPassword">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">@StringLocalizer["Start"]</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" checked="@Model.Channel3.NtripEnable" name="NtripEnable" lay-skin="switch" lay-text="ON|OFF" value="true">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-layout-admin">
+                                        <div class="layui-input-block">
+                                            <div style="left: 0;">
+                                                <button class="layui-btn" lay-submit="" lay-filter="component-form-demo3">@StringLocalizer["Save"]</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="~/lib/layuiadmin/layui/layui.js"></script>
+        <script>
+		layui.config({
+			base: '/lib/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use(['index', 'form', 'laydate', "ax"], function () {
+			var $ax = layui.ax;
+			var $ = layui.$
+				, admin = layui.admin
+				, element = layui.element
+				, layer = layui.layer
+				, laydate = layui.laydate
+				, form = layui.form;
+
+			form.render(null, 'component-form-group');
+
+			laydate.render({
+				elem: '#LAY-component-form-group-date'
+			});
+
+			/* 监听提交 */
+			form.on('submit(component-form-demo1)', function (data) {
+				var ajax = new $ax("/IO/setNtripServer", function (data) {
+					layer.msg('@StringLocalizer["SaveOk"]', {
+						shade: 0.8
+						, icon: 1
+						, time: 1000
+					}, function () {
+						location.reload();
+					});
+				}, function (data) {
+					layer.msg('@StringLocalizer["SaveFailed"]', {
+						shade: 0.8
+						, icon: 2
+						, time: 1000
+					}, function () {
+					});
+				});
+				ajax.set(data.field);
+				ajax.start();
+
+				return false;
+            });
+
+            			/* 监听提交 */
+			form.on('submit(component-form-demo2)', function (data) {
+				var ajax = new $ax("/IO/setNtripServer2", function (data) {
+					layer.msg('@StringLocalizer["SaveOk"]', {
+						shade: 0.8
+						, icon: 1
+						, time: 1000
+					}, function () {
+						location.reload();
+					});
+				}, function (data) {
+					layer.msg('@StringLocalizer["SaveFailed"]', {
+						shade: 0.8
+						, icon: 2
+						, time: 1000
+					}, function () {
+					});
+				});
+				ajax.set(data.field);
+				ajax.start();
+
+				return false;
+			});
+
+                        			/* 监听提交 */
+			form.on('submit(component-form-demo3)', function (data) {
+                var ajax = new $ax("/IO/setNtripServer3", function (data) {
+					layer.msg('@StringLocalizer["SaveOk"]', {
+						shade: 0.8
+						, icon: 1
+						, time: 1000
+					}, function () {
+						location.reload();
+					});
+				}, function (data) {
+					layer.msg('@StringLocalizer["SaveFailed"]', {
+						shade: 0.8
+						, icon: 2
+						, time: 1000
+					}, function () {
+					});
+				});
+				ajax.set(data.field);
+				ajax.start();
+
+				return false;
+			});
+
+
+			$("#getBtn").click(function () {
+				$.get("/IO/getMountPoint?ip=" + $("#ip").val() + "&port=" + $("#port").val(), {}, function (data) {
+					$("#selectNtripMountPointDiv").css('display', 'block');
+					var list = data.data;
+					var select = document.getElementById('selectNtripMountPoint');
+					if (list != null || list.size() > 0) {
+						for (var c in list) {
+							var option = document.createElement("option");
+							option.setAttribute("value", list[c].mountPoint);
+							option.innerText = list[c].mountPoint;
+
+							select.appendChild(option);
+						}
+					};
+
+					form.render('select');
+					form.on('select()', function (data) {
+						if (data.elem.id == "selectNtripMountPoint") {
+							$("#NtripMountPoint").val($("#selectNtripMountPoint").val());
+						}
+					});
+				}, "json");
+			});
+
+
+		});
+        </script>
+</body>
+</html>

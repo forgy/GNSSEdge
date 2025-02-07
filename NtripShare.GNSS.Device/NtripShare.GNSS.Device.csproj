@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SignAssembly>False</SignAssembly>
+    <PackageId>NtripShare边缘监测软件</PackageId>
+    <Title>Ntripshare边缘监测软件</Title>
+    <Version>23.07.24</Version>
+    <Authors>Mr.Peng</Authors>
+    <Product>NtripShare.Mos.Edge</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <COMReference Include="MMC20">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>8e80422b-cac4-472b-b272-9635f1dfef3b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GeoAPI" Version="1.7.5" />
+    <PackageReference Include="log4net" Version="2.0.15" />
+    <PackageReference Include="MQTTnet" Version="4.3.3.952" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SpanNetty.Buffers" Version="0.7.2012.2221" />
+    <PackageReference Include="SpanNetty.Codecs" Version="0.7.2012.2221" />
+    <PackageReference Include="SpanNetty.Common" Version="0.7.2012.2221" />
+    <PackageReference Include="SpanNetty.Handlers" Version="0.7.2012.2221" />
+    <PackageReference Include="SpanNetty.Transport" Version="0.7.2012.2221" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+    <PackageReference Include="UPnP" Version="1.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Shell\start4G.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Shell\startWifi.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Shell\stop4G.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Shell\stopWifi.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
