@@ -26,8 +26,6 @@
 
 ![RUNOOB 图标](https://i-blog.csdnimg.cn/blog_migrate/f82a1b5a07798cb5f3e0f37e12df75e4.png)
 
-![RUNOOB 图标](https://i-blog.csdnimg.cn/blog_migrate/112b6bb440426c1ffe3a931076c09b8c.png)
-
 ![RUNOOB 图标](https://i-blog.csdnimg.cn/blog_migrate/4588f11a9216879ef43a7245db683391.png)
 
 ![RUNOOB 图标](https://i-blog.csdnimg.cn/blog_migrate/fcbf1843f0f0b7ce986bd6de92a4a174.png)
